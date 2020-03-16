@@ -1,7 +1,3 @@
-"""Code to accompany Machine Learning Recipes #8.
-
-We'll write a Decision Tree Classifier, in pure Python.
-"""
 
 # For Python 2 / 3 compatability
 from __future__ import print_function
@@ -17,35 +13,12 @@ data = pd.read_csv("telecom_churn.csv")
 trainingData = data.head(2000)
 print(trainingData)
 
-
 # Using the remaining data for testing
 testData = data.tail(-2000)
 print(testData)
 
-
-# Toy dataset.
-# Format: each row is an example.
-# The last column is the label.
-# The first two columns are features.
-# Feel free to play with it by adding more features & examples.
-# Interesting note: I've written this so the 2nd and 5th examples
-    # have the same features, but different labels - so we can see how the
-# tree handles this case.
-# training_data = [
-#     ['Green', 3, 'healthy', 'Apple'],
-#     ['Yellow', 3, 'healthy', 'Apple'],
-#     ['Red', 1, 'lars', 'Grape'],
-#     ['Red', 1, 'lars', 'Grape'],
-#     ['Yellow', 3, 'lars', 'Lemon'],
-# ]
-
 training_data = trainingData.values
-
-# Column labels.
-# These are used only to print the tree.
 header = data.head(0).columns
-
-
 
 
 
@@ -330,7 +303,7 @@ def build_tree(rows):
     # we'll return a leaf.
     print('gain: ', gain)
 
-    prune_treshold = 0.02
+    prune_treshold = 0.012
     if gain < prune_treshold:
         return Leaf(rows)
 
@@ -429,14 +402,6 @@ if __name__ == '__main__':
     print_tree(my_tree)
     print('total_tree_length: %s', total_tree_length )
 
-    # Evaluate
-    testing_data = [
-        ['Green', 3, 'lars', 'Apple'],
-        ['Yellow', 4, 'healthy', 'Apple'],
-        ['Red', 2, 'healthy','Grape'],
-        ['Red', 1,'lars', 'Grape'],
-        ['Yellow', 3, 'healthy', 'Lemon'],
-    ]
 
     testing_data = testData.values
 
@@ -445,10 +410,6 @@ if __name__ == '__main__':
     for row in testing_data:
         if(list(print_leaf(classify(row, my_tree)))[0] != row[-1]):
             incorrectGuesses += 1
-
-        # print(correctGuesses)
-        # print ("Actual: %s. Predicted: %s" %
-       #       (row[-1], print_leaf(classify(row, my_tree))))
     accuracy = incorrectGuesses / len(testing_data)
     print("Classification Error: %s" % accuracy)
 
